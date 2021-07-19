@@ -1,9 +1,9 @@
 export default {
   install: (app) => {
-    app.mixin({
-      mounted() {
-        console.log('Hello from examplePlugin')
-      },
-    })
+    // app.mixin({
+    //   mounted() {
+    //     console.log('Hello from examplePlugin')
+    //   },
+    // })
   },
 }

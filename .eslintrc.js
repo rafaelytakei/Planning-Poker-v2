@@ -13,4 +13,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2021,
   },
+  rules: {
+    'vue/require-v-for-key': 'off',
+  },
 }
