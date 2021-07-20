@@ -14,7 +14,7 @@
 } */
 #app {
   /* min-height: 100vh; */
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 2rem 0 2rem;
   height: 100%;
   --font-family: 'Noto Sans', sans-serif;
   --border-radius: 10px;

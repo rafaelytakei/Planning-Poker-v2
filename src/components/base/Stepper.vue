@@ -18,7 +18,7 @@
       >
         {{ i + 1 }}
       </div>
-      <span class="text-color2">{{ step }}</span>
+      <span class="text-md mt-2">{{ step }}</span>
       <div class="step__line-after"></div>
     </div>
   </div>
