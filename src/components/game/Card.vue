@@ -1,5 +1,5 @@
 <template>
-  <div class="game-card" :class="{ active }">
+  <div class="game-card" :class="{ active, flipped, nohover: disableHover }">
     <span class="font-bold text-xl">{{ cardValue }}</span>
   </div>
 </template>
@@ -12,6 +12,14 @@ const props = defineProps({
     default: '',
   },
   active: {
+    type: Boolean,
+    default: false,
+  },
+  flipped: {
+    type: Boolean,
+    default: false,
+  },
+  disableHover: {
     type: Boolean,
     default: false,
   },
@@ -30,7 +38,12 @@ const props = defineProps({
   cursor: pointer;
   transition: all 0.25s ease-in-out;
 }
-.game-card:hover,
+.game-card.flipped {
+  background-color: white;
+  transition: transform 0.25s ease-in-out;
+  transform: rotateY(180deg);
+}
+.game-card:not(.nohover):hover,
 .game-card.active {
   transform: scale(110%);
   background-color: rgba(255, 255, 255, 0.1);

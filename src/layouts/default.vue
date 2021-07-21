@@ -30,9 +30,7 @@ const items = ref([
     command: async () => {
       await signUserOut()
       user.value = null
-      router.push({
-        path: '/',
-      })
+      router.go()
     },
   },
 ])

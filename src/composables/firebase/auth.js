@@ -1,5 +1,4 @@
 import to from 'await-to-js'
-
 import {
   GoogleAuthProvider,
   getAuth,
@@ -8,10 +7,9 @@ import {
   signInAnonymously,
   signOut,
 } from 'firebase/auth'
-import { get, getDatabase, ref, set } from 'firebase/database'
+import { get, getDatabase, off, ref, set } from 'firebase/database'
+import { db } from '../game'
 
-// import { useRouter } from 'vue-router'
-import router from '~/router'
 const provider = new GoogleAuthProvider()
 const auth = getAuth()
 
@@ -79,4 +77,16 @@ export const signUserOut = async () => {
     console.error('Error signing user out')
     return
   }
+}
+
+export const getUserName = async (userUid) => {
+  const db = getDatabase()
+  const userRef = ref(db, `/users/${userUid}/name`)
+  const [err, snapshot] = await to(get(userRef))
+  if (err) {
+    console.error(`Error getting name for user ${userUid}`)
+    return 'Anonymous'
+  }
+  if (!snapshot.exists()) return 'Anonymous'
+  return snapshot.val()
 }
