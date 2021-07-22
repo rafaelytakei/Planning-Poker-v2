@@ -4,7 +4,11 @@
       <template #title> Admin </template>
       <template #content>
         <Button class="mb-2" label="Criar novo round" @click="createRound" />
-        <Button label="Iniciar round" @click="handleStartRound" />
+        <Button
+          v-if="!currentRound.played"
+          label="Iniciar round"
+          @click="handleStartRound"
+        />
       </template>
     </Card>
   </div>
@@ -18,7 +22,19 @@ import {
   setCurrentRound,
   startRound,
 } from '~/composables/game'
+import { defineProps, computed } from 'vue'
 const route = useRoute()
+const props = defineProps({
+  currentGame: {
+    type: Object,
+    default: () => {},
+  },
+})
+const currentRound = computed(() => {
+  const currentRoundId = props.currentGame?.currentRound
+  if (!props.currentGame || !props.currentGame.rounds) return {}
+  return props.currentGame?.rounds[currentRoundId]
+})
 const createRound = async () => {
   const newRoundId = await createNewRound(route.params.gameUid, {
     played: false,

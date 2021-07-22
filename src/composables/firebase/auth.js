@@ -14,15 +14,14 @@ const provider = new GoogleAuthProvider()
 const auth = getAuth()
 
 export const googleSignIn = async () => {
-  const [err, res] = await to(signInWithPopup(auth, provider))
+  const [err] = await to(signInWithPopup(auth, provider))
   if (err) {
     console.log('Error signing user in')
     return
   }
-  const credential = GoogleAuthProvider.credentialFromResult(res)
-  const token = credential.accessToken
-  const user = res.user
-  return { token, user }
+  const user = await getUser()
+  await setUserNameOnDb(user.uid, user.displayName)
+  return true
 }
 
 export const anonymousSignIn = async (customName) => {

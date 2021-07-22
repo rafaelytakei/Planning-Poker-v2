@@ -4,7 +4,7 @@
     <h3 class="mt-6 text-center">Status do round: {{ currentStatus }}</h3>
     <div class="my-auto flex justify-content-between">
       <game-table class="my-auto" :current-game="currentGame" />
-      <game-admin />
+      <game-admin :current-game="currentGame" />
     </div>
     <game-hand class="mt-auto" />
   </div>
@@ -13,7 +13,12 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getUser } from '~/composables/firebase'
-import { connectUserToGame, watchGame } from '~/composables/game'
+import {
+  connectUserToGame,
+  createNewRound,
+  gameHasRounds,
+  watchGame,
+} from '~/composables/game'
 
 const route = useRoute()
 const router = useRouter()
@@ -28,12 +33,17 @@ onMounted(async () => {
     })
     return
   }
-  connectUserToGame(route.params.gameUid, user.uid)
+  await connectUserToGame(route.params.gameUid, user.uid)
+  const hasRounds = await gameHasRounds(route.params.gameUid)
+  if (!hasRounds) await createNewRound(route.params.gameUid)
 })
 const currentGame = ref()
 watchGame(route.params.gameUid, currentGame)
 const currentRound = computed(() => {
   const currentRoundId = currentGame?.value?.currentRound
+  if (!currentGame.value?.rounds) {
+    return null
+  }
   return currentGame?.value?.rounds[currentRoundId]
 })
 const currentStatus = computed(() => {

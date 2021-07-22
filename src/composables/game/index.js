@@ -89,7 +89,10 @@ export const setCurrentRound = async (gameUid, roundId) => {
   }
 }
 
-export const createNewRound = async (gameUid, roundSettings) => {
+export const createNewRound = async (
+  gameUid,
+  roundSettings = { played: false }
+) => {
   const gameRoundsRef = ref(db, `/games/${gameUid}/rounds/`)
   const [err, rounds] = await to(get(gameRoundsRef))
   if (err) {
@@ -135,6 +138,16 @@ export const connectUserToGame = async (gameUid, userUid) => {
   })
 }
 
+export const gameHasRounds = async (gameUid) => {
+  const gameRoundsRef = ref(db, `games/${gameUid}/rounds`)
+  const [err, rounds] = await to(get(gameRoundsRef))
+  if (err) {
+    console.error(`Error getting rounds of game ${gameUid}`)
+    return
+  }
+  if (!rounds.exists()) return false
+  return true
+}
 const getUserSettingsInGame = async (gameUid, userUid) => {
   const dbRef = ref(db)
   const [err, snapshot] = await to(

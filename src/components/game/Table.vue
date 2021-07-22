@@ -32,6 +32,7 @@ const usersInGame = ref()
 watchUsersInGame(route.params.gameUid, usersInGame)
 const currentRound = computed(() => {
   const currentRoundId = props.currentGame?.currentRound
+  if (!props.currentGame || !props.currentGame.rounds) return {}
   return props.currentGame?.rounds[currentRoundId]
 })
 onMounted(async () => {

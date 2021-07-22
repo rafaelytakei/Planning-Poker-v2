@@ -9,7 +9,7 @@
         label="Login com Google"
         class="mb-3"
         icon="pi pi-google"
-        @click="googleSignIn"
+        @click="handleGoogleSignIn"
       />
       <Button
         class="p-button-outlined"
@@ -78,6 +78,20 @@ watch(
 const handleAnonymousSignIn = async () => {
   if (!customUserName.value) return
   const signIn = await anonymousSignIn(customUserName.value)
+  if (signIn) {
+    if (route.query.from) {
+      router.push({
+        path: route.query.from,
+      })
+    } else {
+      router.push({
+        path: '/menu',
+      })
+    }
+  }
+}
+const handleGoogleSignIn = async () => {
+  const signIn = await googleSignIn()
   if (signIn) {
     if (route.query.from) {
       router.push({
