@@ -14,14 +14,11 @@
   </div>
 </template>
 <script setup>
-import { computed, onBeforeMount, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { getUser } from '~/composables/firebase'
+import { user } from '~/composables/firebase'
 import { currentGameData, setUserCardInGame } from '~/composables/game'
-const user = ref(null)
-onBeforeMount(async () => {
-  user.value = await getUser()
-})
+user
 const route = useRoute()
 const userSelectedCard = computed(() => {
   if (!currentGameData.value) return null

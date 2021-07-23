@@ -7,8 +7,8 @@ import {
   signInAnonymously,
   signOut,
 } from 'firebase/auth'
-import { get, getDatabase, off, ref, set } from 'firebase/database'
-import { db } from '../game'
+import { get, getDatabase, ref, set } from 'firebase/database'
+import { ref as vueRef } from 'vue'
 
 const provider = new GoogleAuthProvider()
 const auth = getAuth()
@@ -88,4 +88,12 @@ export const getUserName = async (userUid) => {
   }
   if (!snapshot.exists()) return 'Anonymous'
   return snapshot.val()
+}
+
+export const user = vueRef(null)
+
+export const updateUser = async () => {
+  console.log('updating')
+  user.value = await getUser()
+  console.log(user.value)
 }

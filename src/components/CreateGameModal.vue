@@ -63,7 +63,14 @@
               :options="deckOptions"
               option-label="name"
               class="p-inputtext-lg w-full text-center"
-            />
+            >
+              <template #option="slotProps">
+                <div class="flex align-items-center">
+                  <span class="mr-1">{{ slotProps.option.name }}</span>
+                  <span>({{ slotProps.option.deck.join(', ') }})</span>
+                </div>
+              </template>
+            </dropdown>
           </div>
         </div>
       </div>
@@ -83,7 +90,10 @@
               Nome: <span class="font-normal"> {{ form.name }}</span>
             </h5>
             <h5 class="text-xl mt-0">
-              Deck: <span class="font-normal"> {{ form.deck.name }}</span>
+              Deck:
+              <span class="font-normal">
+                {{ form.deck.name }} ({{ form.deck.deck.join(', ') }})</span
+              >
             </h5>
           </div>
         </div>
@@ -136,7 +146,7 @@ import {
   watchEffect,
   watch,
 } from 'vue'
-import { getAnonymousName, getUser } from '~/composables/firebase'
+import { getAnonymousName, user } from '~/composables/firebase'
 import * as stepOneAnimation from '~/assets/lottie/meeting.json'
 import * as stepTwoAnimation from '~/assets/lottie/aces.json'
 import * as summaryAnimation from '~/assets/lottie/checklist.json'
@@ -158,14 +168,13 @@ const form = reactive({
   deck: deckOptions[0],
 })
 const currentStep = ref(0)
-const user = ref({})
 const stepOneAnimationWrapper = ref(null)
 const stepTwoAnimationWrapper = ref(null)
 const summaryAnimationWrapper = ref(null)
 const successAnimationWrapper = ref(null)
 const currentAnimation = ref(null)
+
 const clearForm = async () => {
-  user.value = await getUser()
   if (user.value.isAnonymous) {
     const userName = await getAnonymousName(user.value.uid)
     form.name = `Jogo de ${userName}`
@@ -174,25 +183,28 @@ const clearForm = async () => {
   }
   form.deck = deckOptions[0]
 }
-watchEffect(async () => {
-  if (props.showCreateModal) {
-    await clearForm()
-    currentStep.value = 0
-    showModal.value = true
-    await nextTick()
-    document.getElementById('createGameFormName').select()
-    currentAnimation.value = lottie.loadAnimation({
-      container: stepOneAnimationWrapper.value,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: JSON.parse(JSON.stringify(stepOneAnimation)),
-    })
+watch(
+  () => props.showCreateModal,
+  async (val) => {
+    if (val) {
+      await clearForm()
+      currentStep.value = 0
+      showModal.value = true
+      await nextTick()
+      document.getElementById('createGameFormName').select()
+      currentAnimation.value = lottie.loadAnimation({
+        container: stepOneAnimationWrapper.value,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        animationData: JSON.parse(JSON.stringify(stepOneAnimation)),
+      })
+    }
   }
-})
+)
 watch(
   () => currentStep.value,
-  async (newVal, oldVal) => {
+  async (newVal) => {
     currentAnimation.value.destroy()
     await nextTick()
     setTimeout(() => {
@@ -241,7 +253,6 @@ watchEffect(() => {
 })
 const router = useRouter()
 const createGame = async () => {
-  const user = await getUser()
   currentStep.value++
   const newGameUid = await initGame(user.uid, form)
   setTimeout(() => {

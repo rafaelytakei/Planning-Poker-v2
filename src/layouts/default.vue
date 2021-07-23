@@ -2,7 +2,7 @@
   <router-view v-slot="{ Component }">
     <Avatar
       v-if="user"
-      label="A"
+      icon="pi pi-user"
       class="avatar"
       size="large"
       shape="circle"
@@ -31,12 +31,14 @@ const items = ref([
       await signUserOut()
       user.value = null
       router.go()
+      router.push({
+        path: '/',
+      })
     },
   },
 ])
 const route = useRoute()
 watch(route, async () => {
-  console.log('changing route')
   user.value = await getUser()
 })
 onMounted(async () => {
@@ -52,13 +54,6 @@ const toggleMenu = (event) => {
 .fade-leave-active {
   transition: opacity 0.4s ease-in-out;
 }
-
-/* .fade-enter-from {
-  transform: rotateY(-90deg);
-}
-.fade-leave-to {
-  transform: rotateY(90deg);
-} */
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

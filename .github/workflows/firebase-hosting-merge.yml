@@ -10,6 +10,17 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: pnpm/action-setup@v2.0.1
+      - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
+        with:
+          version: 6.10.0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm test
       - uses: actions/checkout@v2
       - run: pnpm i && pnpm build
       - uses: FirebaseExtended/action-hosting-deploy@v0

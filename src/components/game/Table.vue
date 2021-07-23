@@ -8,16 +8,15 @@
       <game-card
         :card-value="user.data.selectedCard"
         :empty="user.data.selectedCard === ''"
-        :flipped="!currentRound.played && currentUser?.uid !== user.uid"
+        :flipped="!currentRound.played && user?.uid !== user.uid"
         disable-hover
       />
     </div>
   </div>
 </template>
 <script setup>
-import { computed, onMounted, ref, defineProps } from 'vue'
+import { computed, ref, defineProps } from 'vue'
 import { useRoute } from 'vue-router'
-import { getUser } from '~/composables/firebase'
 import { watchUsersInGame } from '~/composables/game'
 
 const props = defineProps({
@@ -27,15 +26,11 @@ const props = defineProps({
   },
 })
 const route = useRoute()
-const currentUser = ref()
 const usersInGame = ref()
 watchUsersInGame(route.params.gameUid, usersInGame)
 const currentRound = computed(() => {
   const currentRoundId = props.currentGame?.currentRound
   if (!props.currentGame || !props.currentGame.rounds) return {}
   return props.currentGame?.rounds[currentRoundId]
-})
-onMounted(async () => {
-  currentUser.value = await getUser()
 })
 </script>

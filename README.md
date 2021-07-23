@@ -1,3 +1,9 @@
 # Planning Poker App
 
-Built using Vue3, Vite, PrimeVue, Firebase, Lottie
+### Tech Stack
+
+- Vue3
+- Vite
+- PrimeVue
+- Firebase (Auth, RTDB, Hosting)
+- Lottie

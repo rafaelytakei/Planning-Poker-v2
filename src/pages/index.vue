@@ -3,7 +3,9 @@
     class="flex flex-column justify-content-center align-items-center h-full"
   >
     <logo />
-    <h5 class="text-xl font-normal">Faça login antes de continuar:</h5>
+    <h5 class="text-xl font-normal">
+      É necessário fazer login antes de continuar:
+    </h5>
     <div class="flex flex-column">
       <Button
         label="Login com Google"
@@ -38,6 +40,7 @@
         <Button
           label="Continuar"
           class="w-full"
+          :loading="loading"
           @click="handleAnonymousSignIn"
         ></Button>
       </template>
@@ -46,10 +49,10 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, ref, watch } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import lottie from 'lottie-web'
 import * as anonymousAnimation from '~/assets/lottie/privacy.json'
-import { anonymousSignIn, getUser, googleSignIn } from '~/composables/firebase'
+import { anonymousSignIn, googleSignIn } from '~/composables/firebase'
 import { useRoute, useRouter } from 'vue-router'
 const showAnonymousModal = ref(false)
 const anonymousAnimationWrapper = ref()
@@ -57,6 +60,7 @@ const customUserName = ref('')
 const modalAnimation = ref(null)
 const router = useRouter()
 const route = useRoute()
+const loading = ref(false)
 watch(
   () => showAnonymousModal.value,
   async (val) => {
@@ -77,6 +81,7 @@ watch(
 )
 const handleAnonymousSignIn = async () => {
   if (!customUserName.value) return
+  loading.value = true
   const signIn = await anonymousSignIn(customUserName.value)
   if (signIn) {
     if (route.query.from) {

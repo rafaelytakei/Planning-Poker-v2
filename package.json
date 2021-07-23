@@ -1,5 +1,5 @@
 {
-  "name": "vite-vue3-boilerplate",
+  "name": "planning-poker-app",
   "author": {
     "name": "Rafael Takei",
     "email": "rafaelytakei@gmail.com"
@@ -9,17 +9,18 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "deploy": "vite build && firebase deploy --only hosting"
   },
   "dependencies": {
     "animejs": "^3.2.1",
     "await-to-js": "^3.0.0",
-    "firebase": "^9.0.0-beta.6",
+    "firebase": "^9.0.0-beta.7",
     "lottie-web": "^5.7.12",
     "primeflex": "^3.0.0",
     "primeicons": "^4.1.0",
     "primevue": "^3.5.1",
-    "vite-plugin-components": "^0.12.2",
+    "vite-plugin-components": "0.13",
     "vue": "^3.1.5",
     "vuex": "^4.0.2"
   },
@@ -29,11 +30,11 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "eslint": "^7.31.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-vue": "^7.13.0",
+    "eslint-plugin-vue": "^7.14.0",
     "prettier": "^2.3.2",
-    "vite": "^2.4.2",
+    "vite": "^2.4.3",
     "vite-plugin-fonts": "^0.2.2",
-    "vite-plugin-pages": "^0.15",
+    "vite-plugin-pages": "^0.15.1",
     "vite-plugin-vue-layouts": "^0.3.1",
     "vue-router": "^4.0.10"
   }
