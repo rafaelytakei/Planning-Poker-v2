@@ -9,6 +9,7 @@
       v-if="currentStep < createGameSteps.length"
       :steps="createGameSteps"
       :current-step="currentStep"
+      @set-step="setStep"
     ></base-stepper>
     <transition mode="out-in" name="fade">
       <div
@@ -115,7 +116,7 @@
     <template v-if="currentStep < createGameSteps.length" #footer>
       <transition name="delayedFade" mode="out-in">
         <Button
-          v-if="currentStep > 0 && currentStep < createGameSteps.length - 1"
+          v-if="currentStep > 0 && currentStep < createGameSteps.length"
           label="Voltar"
           @click="currentStep--"
         />
@@ -173,7 +174,9 @@ const stepTwoAnimationWrapper = ref(null)
 const summaryAnimationWrapper = ref(null)
 const successAnimationWrapper = ref(null)
 const currentAnimation = ref(null)
-
+const setStep = (val) => {
+  currentStep.value = val
+}
 const clearForm = async () => {
   if (user.value.isAnonymous) {
     const userName = await getAnonymousName(user.value.uid)
@@ -254,7 +257,7 @@ watchEffect(() => {
 const router = useRouter()
 const createGame = async () => {
   currentStep.value++
-  const newGameUid = await initGame(user.uid, form)
+  const newGameUid = await initGame(user.value.uid, form)
   setTimeout(() => {
     if (newGameUid) {
       router.push({

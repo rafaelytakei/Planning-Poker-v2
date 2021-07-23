@@ -1,10 +1,14 @@
 <template>
   <div class="flex flex-column justify-content-center align-items-center logo">
-    <div class="flex align-items-center">
+    <div
+      class="flex align-items-center cursor-pointer"
+      @click="router.push({ path: '/menu' })"
+    >
       <svg
         ref="planningSvg"
         width="161.7"
         height="50"
+        class="mb-3"
         viewBox="0 0 161.7 50"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -66,7 +70,7 @@
         height="40.35"
         viewBox="0 0 98.7 40.35"
         xmlns="http://www.w3.org/2000/svg"
-        class="ml-2 mb-1"
+        class="ml-2 mb-4"
       >
         <g
           id="svgGroup"
@@ -115,10 +119,12 @@ import anime from 'animejs'
 import lottie from 'lottie-web'
 import * as cardsAnimation from '~/assets/lottie/cards.json'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const planningSvg = ref(null)
 const pokerSvg = ref(null)
 const lottieWrapper = ref(null)
+const router = useRouter()
 onMounted(() => {
   const planningPaths = planningSvg.value.querySelectorAll('path')
   animatePaths(planningPaths, 600)
@@ -161,10 +167,13 @@ path {
 }
 .lottie-wrapper {
   width: 10rem;
-  margin-bottom: -2.5rem;
+  margin-bottom: -0.75rem;
   margin-left: 1rem;
 }
 .logo {
   margin-bottom: -3rem;
+}
+object {
+  pointer-events: none;
 }
 </style>

@@ -76,6 +76,7 @@ export const signUserOut = async () => {
     console.error('Error signing user out')
     return
   }
+  user.value = null
 }
 
 export const getUserName = async (userUid) => {
@@ -93,7 +94,5 @@ export const getUserName = async (userUid) => {
 export const user = vueRef(null)
 
 export const updateUser = async () => {
-  console.log('updating')
   user.value = await getUser()
-  console.log(user.value)
 }

@@ -1,20 +1,17 @@
 <template>
   <router-view v-slot="{ Component }">
-    <div class="flex flex-column h-full">
-      <small-logo />
-      <Avatar
-        v-if="user"
-        icon="pi pi-user"
-        class="avatar"
-        size="large"
-        shape="circle"
-        @click="toggleMenu"
-      />
-      <TieredMenu ref="menu" :model="items" :popup="true" />
-      <transition name="fade" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </div>
+    <Avatar
+      v-if="user"
+      icon="pi pi-user"
+      class="avatar"
+      size="large"
+      shape="circle"
+      @click="toggleMenu"
+    />
+    <TieredMenu ref="menu" :model="items" :popup="true" />
+    <transition name="fade" mode="out-in">
+      <component :is="Component" />
+    </transition>
   </router-view>
 </template>
 

@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app'
-
 const firebaseConfig = {
   apiKey: 'AIzaSyB34m5JGcjT51rAhYvjTblCRGr5fpiYh0k',
   authDomain: 'planning-poker-v2.firebaseapp.com',

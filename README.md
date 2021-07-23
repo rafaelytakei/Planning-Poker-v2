@@ -1,5 +1,6 @@
 # Planning Poker App
 
+Live version: https://planning-poker-v2.web.app/
 ### Tech Stack
 
 - Vue3

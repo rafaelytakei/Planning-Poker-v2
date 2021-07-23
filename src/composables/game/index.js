@@ -237,3 +237,15 @@ export const getCurrentRoundId = async (gameUid) => {
   if (!round.exists()) return -1
   return round.val()
 }
+
+export const deselectUserCard = async (gameUid, userUid) => {
+  const userCardInGameRef = ref(
+    db,
+    `games/${gameUid}/users/${userUid}/selectedCard`
+  )
+  const [err] = await to(set(userCardInGameRef, ''))
+  if (err) {
+    console.error(`Error deselecting user's ${userUid} card in game ${gameUid}`)
+    return
+  }
+}

@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-column h-full">
-    <small-logo />
     <h3 class="mt-6 text-center">Status do round: {{ currentStatus }}</h3>
     <div class="my-auto flex justify-content-between">
       <game-table class="my-auto" :current-game="currentGame" />

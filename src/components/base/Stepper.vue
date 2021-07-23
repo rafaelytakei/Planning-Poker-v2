@@ -3,7 +3,10 @@
     <div
       v-for="(step, i) in steps"
       class="step flex flex-column align-items-center flex-1 relative"
-      :class="{ active: i === currentStep, activated: i < currentStep }"
+      :class="{
+        active: i === currentStep,
+        activated: i < currentStep,
+      }"
     >
       <div
         class="
@@ -15,6 +18,8 @@
           font-bold
           text-xl
         "
+        :class="{ ['cursor-pointer']: i < currentStep }"
+        @click="setStep(i)"
       >
         {{ i + 1 }}
       </div>
@@ -24,7 +29,7 @@
   </div>
 </template>
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 defineProps({
   steps: {
     type: Array,
@@ -32,6 +37,10 @@ defineProps({
   },
   currentStep: { type: Number, default: 0 },
 })
+const emits = defineEmits(['set-step'])
+const setStep = (val) => {
+  emits('set-step', val)
+}
 </script>
 
 <style>

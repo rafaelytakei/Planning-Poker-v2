@@ -1,14 +1,24 @@
 <template>
   <div class="flex">
     <div
-      v-for="user in usersInGame"
+      v-for="player in usersInGame"
       class="flex flex-column mx-4 align-items-center"
     >
-      <h4 class="text-2xl">{{ user.name }}</h4>
+      <h4 class="text-2xl">{{ player.name }}</h4>
       <game-card
-        :card-value="user.data.selectedCard"
-        :empty="user.data.selectedCard === ''"
-        :flipped="!currentRound.played && user?.uid !== user.uid"
+        :card-value="
+          player.data.selectedCard !== '' &&
+          !currentRound.played &&
+          user?.uid !== player.uid
+            ? ''
+            : player.data.selectedCard
+        "
+        :empty="player.data.selectedCard === ''"
+        :flipped="
+          player.data.selectedCard !== '' &&
+          !currentRound.played &&
+          user?.uid !== player.uid
+        "
         disable-hover
       />
     </div>
@@ -17,6 +27,7 @@
 <script setup>
 import { computed, ref, defineProps } from 'vue'
 import { useRoute } from 'vue-router'
+import { user } from '~/composables/firebase'
 import { watchUsersInGame } from '~/composables/game'
 
 const props = defineProps({

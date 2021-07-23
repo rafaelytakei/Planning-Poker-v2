@@ -6,7 +6,7 @@
 
 <script setup>
 import { defineProps } from 'vue'
-const props = defineProps({
+defineProps({
   cardValue: {
     type: String,
     default: '',

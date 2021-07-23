@@ -19,6 +19,7 @@
         @click="showAnonymousModal = true"
       />
     </div>
+    <github-logo class="absolute bottom-0 right-0 p-4" />
     <Dialog
       v-model:visible="showAnonymousModal"
       header="Login anônimo"
@@ -31,23 +32,26 @@
       <h5 class="text-xl font-normal text-center">
         Olá! Como podemos te chamar?
       </h5>
-      <input-text
-        v-model="customUserName"
-        type="text"
-        class="p-inputtext-lg w-full text-center"
-      />
-      <template #footer class="flex justify-content-center">
+      <form @submit.prevent="handleAnonymousSignIn">
+        <input-text
+          v-model="customUserName"
+          type="text"
+          class="p-inputtext-lg w-full text-center mb-4"
+        />
         <Button
           label="Continuar"
           class="w-full"
           :loading="loading"
-          @click="handleAnonymousSignIn"
+          type="submit"
         ></Button>
-      </template>
+      </form>
     </Dialog>
   </div>
 </template>
-
+<route lang="yaml">
+meta:
+  layout: login
+</route>
 <script setup>
 import { nextTick, ref, watch } from 'vue'
 import lottie from 'lottie-web'
@@ -116,5 +120,7 @@ const handleGoogleSignIn = async () => {
   width: 17.5rem;
   margin-bottom: -4rem;
   margin-top: -3rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

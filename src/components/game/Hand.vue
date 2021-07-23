@@ -8,7 +8,7 @@
         class="game-card"
         :card-value="gameCard"
         :active="userSelectedCard === gameCard"
-        @click="selectCard(gameCard)"
+        @click="toggleCard(gameCard)"
       />
     </div>
   </div>
@@ -17,15 +17,29 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { user } from '~/composables/firebase'
-import { currentGameData, setUserCardInGame } from '~/composables/game'
+import {
+  currentGameData,
+  deselectUserCard,
+  setUserCardInGame,
+} from '~/composables/game'
 user
 const route = useRoute()
 const userSelectedCard = computed(() => {
   if (!currentGameData.value) return null
   return currentGameData.value.users[user.value.uid].selectedCard
 })
-const selectCard = (gameCard) => {
-  setUserCardInGame(route.params.gameUid, user.value.uid, gameCard)
+const toggleCard = async (gameCard) => {
+  if (userSelectedCard.value === gameCard) {
+    deselectCard()
+  } else {
+    selectCard(gameCard)
+  }
+}
+const selectCard = async (gameCard) => {
+  await setUserCardInGame(route.params.gameUid, user.value.uid, gameCard)
+}
+const deselectCard = async () => {
+  await deselectUserCard(route.params.gameUid, user.value.uid)
 }
 </script>
 <style scoped>
