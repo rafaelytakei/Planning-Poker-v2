@@ -65,6 +65,7 @@ const modalAnimation = ref(null)
 const router = useRouter()
 const route = useRoute()
 const loading = ref(false)
+
 watch(
   () => showAnonymousModal.value,
   async (val) => {

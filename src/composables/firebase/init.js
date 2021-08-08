@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
 const firebaseConfig = {
-  apiKey: 'AIzaSyB34m5JGcjT51rAhYvjTblCRGr5fpiYh0k',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: 'planning-poker-v2.firebaseapp.com',
   projectId: 'planning-poker-v2',
   storageBucket: 'planning-poker-v2.appspot.com',
@@ -11,4 +12,12 @@ const firebaseConfig = {
 }
 
 const firebaseApp = initializeApp(firebaseConfig)
+
+initializeAppCheck(firebaseApp, {
+  provider: new ReCaptchaV3Provider(
+    import.meta.env.VITE_FIREBASE_RECAPTCHA_V3_TOKEN
+  ),
+  isTokenAutoRefreshEnabled: true,
+})
+
 export default firebaseApp
