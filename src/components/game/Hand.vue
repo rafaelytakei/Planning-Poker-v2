@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-column wrapper">
-    <h5 class="text-center text-xl mt-0 mb-4">Suas cartas</h5>
+    <h5 class="text-center text-xl mt-0 mb-4">Escolha uma carta</h5>
     <div class="flex justify-content-evenly">
       <game-card
         v-for="gameCard in currentGameData?.deck?.deck"

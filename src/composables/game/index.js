@@ -15,7 +15,8 @@ import to from 'await-to-js'
 import { getUserName } from '../firebase'
 export const db = getDatabase()
 export const currentGameData = vueRef(null)
-
+export * from './admin'
+export * from './current'
 export const initGame = async (userUid, gameSettings) => {
   // Updating games db
   const newGameKey = push(child(ref(db), 'games')).key
@@ -24,10 +25,6 @@ export const initGame = async (userUid, gameSettings) => {
     name: gameSettings.name,
     deck: gameSettings.deck,
     currentRound: 0,
-    permissions: {
-      startRounds: [userUid],
-      gameAdmin: [userUid],
-    },
     rounds: [],
     activeUsers: [],
   }
@@ -62,55 +59,6 @@ export const getRoundInfo = async (gameUid, roundId) => {
     return null
   }
   return round.val()
-}
-
-export const setCurrentRound = async (gameUid, roundId) => {
-  // Clearing selected cards from all users
-  const usersInGameRef = ref(db, `/games/${gameUid}/users`)
-  const [errUsers, usersInGame] = await to(get(usersInGameRef))
-  if (errUsers) {
-    console.error(`Error clearing selected cards from game ${gameUid}`)
-    return
-  }
-  if (usersInGame.exists()) {
-    const usersUids = Object.keys(usersInGame.val())
-    const updates = {}
-    for (const userUid of usersUids) {
-      updates[`${userUid}/selectedCard`] = ''
-    }
-    await update(usersInGameRef, updates)
-  }
-  // Setting round
-  const currentGameRoundRef = ref(db, `games/${gameUid}/currentRound`)
-  const [err] = await to(set(currentGameRoundRef, roundId))
-  if (err) {
-    console.error(`Error setting game's ${gameUid} currentRound to ${roundId}`)
-    return
-  }
-}
-
-export const createNewRound = async (
-  gameUid,
-  roundSettings = { played: false }
-) => {
-  const gameRoundsRef = ref(db, `/games/${gameUid}/rounds/`)
-  const [err, rounds] = await to(get(gameRoundsRef))
-  if (err) {
-    console.error(`Error getting game's ${gameUid} rounds`)
-    return
-  }
-  let nextRoundId = 0
-  if (rounds.exists()) {
-    nextRoundId = Object.keys(rounds.val()).length
-  }
-  const [setErr] = await to(
-    set(child(gameRoundsRef, `${nextRoundId}`), roundSettings)
-  )
-  if (setErr) {
-    console.error(`Error creating a new round in game ${gameUid}`)
-    return
-  }
-  return nextRoundId
 }
 
 export const connectUserToGame = async (gameUid, userUid) => {
@@ -148,6 +96,7 @@ export const gameHasRounds = async (gameUid) => {
   if (!rounds.exists()) return false
   return true
 }
+
 const getUserSettingsInGame = async (gameUid, userUid) => {
   const dbRef = ref(db)
   const [err, snapshot] = await to(
@@ -206,14 +155,6 @@ export const watchUsersInGame = (gameUid, usersRef) => {
       res.push(formattedData)
     }
     usersRef.value = res
-  })
-}
-
-export const watchGame = (gameUid, currentGameRef) => {
-  const gameRef = ref(db, `/games/${gameUid}`)
-  onValue(gameRef, async (snapshot) => {
-    if (!snapshot.exists()) return
-    currentGameRef.value = snapshot.val()
   })
 }
 

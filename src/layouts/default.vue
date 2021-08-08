@@ -57,6 +57,5 @@ const toggleMenu = (event) => {
   top: 1rem;
   right: 1rem;
   cursor: pointer;
-  background-color: var(--surface-900);
 }
 </style>

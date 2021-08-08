@@ -29,7 +29,6 @@
   </div>
 </template>
 <script setup>
-import { defineProps, defineEmits } from 'vue'
 defineProps({
   steps: {
     type: Array,

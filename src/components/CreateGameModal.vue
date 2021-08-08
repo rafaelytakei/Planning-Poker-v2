@@ -138,15 +138,7 @@
 </template>
 
 <script setup>
-import {
-  defineProps,
-  defineEmits,
-  nextTick,
-  reactive,
-  ref,
-  watchEffect,
-  watch,
-} from 'vue'
+import { nextTick, reactive, ref, watchEffect, watch } from 'vue'
 import { getAnonymousName, user } from '~/composables/firebase'
 import * as stepOneAnimation from '~/assets/lottie/meeting.json'
 import * as stepTwoAnimation from '~/assets/lottie/aces.json'
