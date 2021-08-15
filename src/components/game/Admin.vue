@@ -38,7 +38,12 @@
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { startRound } from '~/composables/game'
-import { currentGame, currentRound } from '~/composables/game/current'
+import {
+  currentChartData,
+  currentGame,
+  currentRound,
+  showSummaryChart,
+} from '~/composables/game/current'
 import { createNewRound, setCurrentRound } from '~/composables/game/round'
 import { setUserSpectatorMode } from '~/composables/game/user'
 const route = useRoute()
@@ -57,6 +62,7 @@ watch(
   }
 )
 const handleCreateRound = async () => {
+  showSummaryChart.value = false
   const newRoundId = await createNewRound(route.params.gameUid, {
     played: false,
   })
@@ -65,6 +71,38 @@ const handleCreateRound = async () => {
 const handleStartRound = async () => {
   const currentRoundId = currentGame.value.currentRound
   await startRound(route.params.gameUid, currentRoundId)
+  // const deck = Object.values(currentGame.value.deck.deck)
+  // const vals = {}
+  // const finalVals = []
+  // for (const card of userCards) {
+  //   vals[card] = vals[card] ? vals[card] + 1 : 1
+  // }
+  // for (const card of deck) {
+  //   if (vals[card]) finalVals.push(vals[card])
+  // }
+  // const graphData = {
+  //   labels: deck.filter((card) => vals[card]),
+  //   datasets: [
+  //     {
+  //       label: 'Cartas',
+  //       backgroundColor: [
+  //         '#960200',
+  //         '#696D7D',
+  //         '#E3879E',
+  //         '#6F9283',
+  //         '#FEC0CE',
+  //         '#8D9F87',
+  //         '#E98A15',
+  //         '#CDC6A5',
+  //         '#F0DCCA',
+  //         '#012622',
+  //       ],
+  //       data: finalVals,
+  //     },
+  //   ],
+  // }
+  // currentChartData.value = graphData
+  // showSummaryChart.value = true
 }
 </script>
 

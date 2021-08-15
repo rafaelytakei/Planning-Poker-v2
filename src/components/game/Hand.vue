@@ -19,6 +19,7 @@ import { useRoute } from 'vue-router'
 import { user } from '~/composables/firebase'
 import {
   currentGameData,
+  currentRound,
   deselectUserCard,
   setUserCardInGame,
 } from '~/composables/game'
@@ -29,10 +30,12 @@ const userSelectedCard = computed(() => {
   return currentGameData.value.users[user.value.uid].selectedCard
 })
 const toggleCard = async (gameCard) => {
-  if (userSelectedCard.value === gameCard) {
-    deselectCard()
-  } else {
-    selectCard(gameCard)
+  if (!currentRound?.value?.played) {
+    if (userSelectedCard.value === gameCard) {
+      deselectCard()
+    } else {
+      selectCard(gameCard)
+    }
   }
 }
 const selectCard = async (gameCard) => {

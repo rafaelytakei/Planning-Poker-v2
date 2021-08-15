@@ -15,6 +15,7 @@
   "dependencies": {
     "animejs": "^3.2.1",
     "await-to-js": "^3.0.0",
+    "chart.js": "^3.5.0",
     "firebase": "^9.0.0-beta.8",
     "lottie-web": "^5.7.12",
     "primeflex": "^3.0.1",

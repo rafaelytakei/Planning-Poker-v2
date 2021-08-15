@@ -6,6 +6,7 @@ specifiers:
   '@vue/eslint-config-prettier': ^6.0.0
   animejs: ^3.2.1
   await-to-js: ^3.0.0
+  chart.js: ^3.5.0
   eslint: ^7.32.0
   eslint-plugin-prettier: ^3.4.0
   eslint-plugin-vue: ^7.15.1
@@ -28,6 +29,7 @@ specifiers:
 dependencies:
   animejs: 3.2.1
   await-to-js: 3.0.0
+  chart.js: 3.5.0
   firebase: 9.0.0-beta.8
   lottie-web: 5.7.12
   primeflex: 3.0.1
@@ -880,6 +882,10 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
+
+  /chart.js/3.5.0:
+    resolution: {integrity: sha512-J1a4EAb1Gi/KbhwDRmoovHTRuqT8qdF0kZ4XgwxpGethJHUdDrkqyPYwke0a+BuvSeUxPf8Cos6AX2AB8H8GLA==}
+    dev: false
 
   /cliui/7.0.4:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}

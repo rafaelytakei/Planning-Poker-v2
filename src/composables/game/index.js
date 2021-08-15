@@ -160,12 +160,32 @@ export const watchUsersInGame = (gameUid, usersRef) => {
 
 export const startRound = async (gameUid, roundId) => {
   // Starting round
-  const roundPlayedRef = ref(db, `/games/${gameUid}/rounds/${roundId}/played`)
-  const [err] = await to(set(roundPlayedRef, true))
+  const roundPlayedRef = ref(db, `/games/${gameUid}/rounds/${roundId}`)
+  const currentGameUsersRef = ref(db, `/games/${gameUid}/users`)
+  const [err1, snapshot1] = await to(get(currentGameUsersRef))
+  if (err1) {
+    console.error(`Error getting users from game ${gameUid}`)
+    return
+  }
+  let allUsersCards = []
+  if (snapshot1.exists()) {
+    for (const val of Object.values(snapshot1.val())) {
+      if (val.selectedCard) {
+        allUsersCards.push(val.selectedCard)
+      }
+    }
+  }
+  const [err] = await to(
+    set(roundPlayedRef, {
+      played: true,
+      cards: allUsersCards,
+    })
+  )
   if (err) {
     console.error(`Error while starting round ${roundId} of game ${gameUid}`)
     return
   }
+  return allUsersCards
 }
 
 export const getCurrentRoundId = async (gameUid) => {

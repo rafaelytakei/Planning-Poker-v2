@@ -18,3 +18,6 @@ export const currentRound = computed(() => {
   if (!currentGame.value || !currentGame.value.rounds) return {}
   return currentGame.value?.rounds[currentRoundId]
 })
+
+export const showSummaryChart = vueRef(false)
+export const currentChartData = vueRef(null)

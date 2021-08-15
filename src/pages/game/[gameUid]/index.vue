@@ -7,11 +7,14 @@
         :current-game="currentGame"
         :users-in-game="usersInGame"
       />
-      <game-admin
-        v-if="adminPermissions"
-        :current-game="currentGame"
-        :users-in-game="usersInGame"
-      />
+      <div class="flex-flex-column">
+        <game-admin
+          v-if="adminPermissions"
+          :current-game="currentGame"
+          :users-in-game="usersInGame"
+        />
+        <game-summary v-show="showSummaryChart" />
+      </div>
     </div>
     <game-hand class="mt-auto" />
   </div>
@@ -25,13 +28,17 @@ import {
   gameHasRounds,
   watchUsersInGame,
 } from '~/composables/game'
-import { currentGame, setCurrentGame } from '~/composables/game/current'
+import {
+  currentGame,
+  setCurrentGame,
+  showSummaryChart,
+  currentRound,
+} from '~/composables/game/current'
 import { createNewRound } from '~/composables/game/round'
 import {
   currentUserInGame,
   watchCurrentUserInGame,
 } from '~/composables/game/user'
-
 const route = useRoute()
 const router = useRouter()
 const adminPermissions = ref(false)
@@ -51,13 +58,6 @@ onMounted(async () => {
   watchCurrentUserInGame()
 })
 setCurrentGame(route.params.gameUid)
-const currentRound = computed(() => {
-  const currentRoundId = currentGame.value?.currentRound
-  if (!currentGame.value?.rounds) {
-    return null
-  }
-  return currentGame.value?.rounds[currentRoundId]
-})
 const currentStatus = computed(() => {
   if (!currentRound.value) return 'Carregando...'
   if (currentRound?.value?.played) return 'Finalizado'

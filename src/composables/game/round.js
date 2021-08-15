@@ -1,6 +1,7 @@
 import { child, get, ref, set, update } from 'firebase/database'
 import { db } from '.'
 import to from 'await-to-js'
+import { gameUid } from './current'
 
 export const createNewRound = async (
   gameUid,
@@ -49,4 +50,15 @@ export const setCurrentRound = async (gameUid, roundId) => {
     console.error(`Error setting game's ${gameUid} currentRound to ${roundId}`)
     return
   }
+}
+
+export const getRoundCards = async (roundId) => {
+  const cardsRef = ref(db, `/games/${gameUid.value}/rounds/${roundId}/cards`)
+  const [err, snapshot] = await to(get(cardsRef))
+  if (err) {
+    console.error(`Error getting cards on round ${roundId}`)
+    return []
+  }
+  if (!snapshot.exists()) return []
+  return Object.values(snapshot.val())
 }

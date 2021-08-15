@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex table">
     <template v-for="player in usersInGame">
       <div
         v-if="!player.data.isSpectator"
@@ -47,3 +47,10 @@ const currentRound = computed(() => {
   return props.currentGame?.rounds[currentRoundId]
 })
 </script>
+
+<style scoped>
+.table {
+  flex-wrap: wrap;
+  width: 100%;
+}
+</style>
