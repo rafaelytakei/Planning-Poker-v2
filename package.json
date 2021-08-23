@@ -15,29 +15,29 @@
   "dependencies": {
     "animejs": "^3.2.1",
     "await-to-js": "^3.0.0",
-    "chart.js": "^3.5.0",
+    "chart.js": "^3.5.1",
     "firebase": "^9.0.0-beta.8",
-    "lottie-web": "^5.7.12",
+    "lottie-web": "^5.7.13",
     "primeflex": "^3.0.1",
     "primeicons": "^4.1.0",
-    "primevue": "^3.6.2",
+    "primevue": "^3.6.4",
     "vite-plugin-components": "~0.13.2",
-    "vue": "^3.1.5",
+    "vue": "^3.2.4",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.4.0",
-    "@vue/compiler-sfc": "^3.1.5",
+    "@vue/compiler-sfc": "^3.2.4",
     "@vue/eslint-config-prettier": "^6.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-vue": "^7.15.1",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-vue": "^7.16.0",
     "prettier": "^2.3.2",
-    "vite": "^2.4.4",
+    "vite": "^2.5.0",
     "vite-plugin-fonts": "^0.2.2",
-    "vite-plugin-pages": "^0.15.1",
+    "vite-plugin-pages": "~0.17.4",
     "vite-plugin-vue-layouts": "^0.3.1",
     "vue-global-api": "^0.4.1",
-    "vue-router": "^4.0.10"
+    "vue-router": "^4.0.11"
   }
 }

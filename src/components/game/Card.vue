@@ -29,8 +29,8 @@ defineProps({
 .game-card {
   border: 3px solid var(--text-color-secondary);
   color: var(--text-color-secondary);
-  width: 3.5rem;
-  height: 5rem;
+  width: 2.75rem;
+  height: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;

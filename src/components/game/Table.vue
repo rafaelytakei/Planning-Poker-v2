@@ -3,9 +3,9 @@
     <template v-for="player in usersInGame">
       <div
         v-if="!player.data.isSpectator"
-        class="flex flex-column mx-4 align-items-center"
+        class="flex flex-column mx-4 align-items-center player"
       >
-        <h4 class="text-2xl">{{ player.name }}</h4>
+        <h4 class="text-lg text-center">{{ player.name }}</h4>
         <game-card
           :card-value="
             player.data.selectedCard !== '' &&
@@ -16,6 +16,7 @@
           "
           :empty="player.data.selectedCard === ''"
           :flipped="
+            player.data.selectedCard !== undefined &&
             player.data.selectedCard !== '' &&
             !currentRound.played &&
             user?.uid !== player.uid
@@ -52,5 +53,10 @@ const currentRound = computed(() => {
 .table {
   flex-wrap: wrap;
   width: 100%;
+}
+
+.player {
+  flex: 0 1 100px;
+  align-self: flex-end;
 }
 </style>

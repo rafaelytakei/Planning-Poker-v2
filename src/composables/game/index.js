@@ -125,6 +125,17 @@ const isUserInGame = async (gameUid, userUid) => {
 
 export const setUserCardInGame = async (gameUid, userUid, cardValue) => {
   const dbRef = ref(db)
+  if (cardValue) {
+    const [clearErr] = await to(
+      set(child(dbRef, `/games/${gameUid}/users/${userUid}/selectedCard`), '')
+    )
+    if (clearErr) {
+      console.error(
+        `Error setting card ${cardValue} for user ${userUid} in ${gameUid}`
+      )
+      return
+    }
+  }
   const [err] = await to(
     set(
       child(dbRef, `/games/${gameUid}/users/${userUid}/selectedCard`),

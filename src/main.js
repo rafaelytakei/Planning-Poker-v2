@@ -8,6 +8,7 @@ import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import PrimeVue from 'primevue/config'
+// import Tooltip from 'primevue/tooltip'
 const plugins = import.meta.globEager('./plugins/*.js')
 // const middlewares = import.meta.globEager('./middleware/*.js')
 const app = createApp(App)
@@ -40,6 +41,7 @@ for (const plugin in plugins) {
 // app.use(PrimeVue)
 // app.component('Card', Card)
 app.directive('ripple', Ripple)
+// app.directive('tooltip', Tooltip)
 app.use(PrimeVue)
 // Mounting the app
 app.mount('#app')
